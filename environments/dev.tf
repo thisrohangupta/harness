@@ -61,3 +61,8 @@ resource "harness_platform_environment" "environment" {
       EOT
 }
 
+provider "harness" {
+  endpoint = "https://app.harness.io/gateway"
+  account_id = "YOUR_HARNESS_ACCOUNT_ID"
+  platform_api_key = "YOUR_PAT"
+}
