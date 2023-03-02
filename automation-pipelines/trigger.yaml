@@ -1,0 +1,30 @@
+trigger:
+  name: Create and Update Service
+  identifier: Create_and_Update_Service
+  enabled: true
+  encryptedWebhookSecretIdentifier: ""
+  description: ""
+  tags: {}
+  orgIdentifier: default
+  projectIdentifier: Rohan
+  pipelineIdentifier: Deploy_Sample_Pipeline_1677582489497
+  source:
+    type: Webhook
+    pollInterval: "0"
+    webhookId: ""
+    spec:
+      type: Github
+      spec:
+        type: Push
+        spec:
+          connectorRef: ProductManagementRohan
+          autoAbortPreviousExecutions: false
+          payloadConditions:
+            - key: targetBranch
+              operator: Equals
+              value: main
+          headerConditions: []
+          repoName: harness
+          actions: []
+  inputYaml: |
+    pipeline: {}
