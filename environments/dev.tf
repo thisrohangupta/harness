@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    harness = {
+      source = "harness/harness"
+      version = "0.14.10"
+    }
+  }
+}
+
 resource "harness_platform_environment" "environment" {
   identifier = "dev" ## Define Environment Identifier, this is unique to the project, org or account - where the environment will be created
   name       = "dev" ## This will be the name of the environment that you will see in Harness UI
