@@ -1,0 +1,46 @@
+pipeline:
+  name: Onboarding Infrastructure Definition
+  identifier: Create_Infrastructure_Pipeline
+  projectIdentifier: cdproduct
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Create and Update Infrastructure
+        identifier: Create_and_Update_Infrastructure
+        description: Create and update a Infrastructure from Github
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: TerraformPlan
+                  name: Infrastructure Create and Update Plan
+                  identifier: Infrastructure_Create_and_Update_Plan
+                  spec:
+                    configuration:
+                      command: Apply
+                      configFiles:
+                        store:
+                          type: Github
+                          spec:
+                            gitFetchType: Branch
+                            connectorRef: <+input>
+                            branch: main
+                            folderPath: infrastructure/devk8s.tf
+                        moduleSource:
+                          useConnectorCredentials: true
+                      secretManagerRef: harnessSecretManager
+                    provisionerIdentifier: infra
+                  timeout: 10m
+              - step:
+                  type: TerraformApply
+                  name: Create and Update Infrastructure
+                  identifier: Create_and_Update_Infrastructure
+                  spec:
+                    configuration:
+                      type: InheritFromPlan
+                    provisionerIdentifier: infra
+                  timeout: 10m
+        tags: {}
+  description: This Pipeline is dedicated to onboarding environments in Harness
