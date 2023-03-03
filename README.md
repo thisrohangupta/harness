@@ -8,9 +8,14 @@ You can navigate to our Terraform Module Offering in the [HashiCorp Terrafrom Re
 
 For this topic we have provided a [sample repository](https://github.com/thisrohangupta/harness)
 
+
 ## Onboarding Automation
 
 We have some basics to help user's get started with the Harness Terraform Provider covered in our [Terraform Provider Quickstart](https://developer.harness.io/docs/platform/Terraform/harness-terraform-provider). In order to get started with Harness Terraform Provider automation, we recommend user's installing a delegate with the Terraform CLI configured. We will need this to build out the automation pipelines to create the various resources
+
+When you define your Service, Environment, Infrastructure Definition, etc. via Terraform, it's a one way sync. You are defining the object in Git via Terraform, and on a commit of a change we will trigger a Harness Pipeline to provision the changes for your account. The pipeline will end up creating a service for you. Any changes you do via Git will propagate to the UI via this Pipeline which will fetch the service Terraform file definition.
+
+Any changes done in the UI will need to be reconciled and updated in the YAML in order to protect against configuration mismatch. We recommend when using the terraform provider to manage services, you should use Git only to make your changes. We can have [RBAC](https://developer.harness.io/docs/platform/role-based-access-control/rbac-in-harness/) in place to prevent the editting and creation of services in the Harness UI.
 
 ### Sample Delegate YAML
 
@@ -240,9 +245,9 @@ infrastructure/
 -- prod_k8s.tf 
 ```
 
-### Store the automation pipeline
+### Manage the automation pipeline
 
-Harness recommends storing the automation pipeline to create and manage resources in a common project that many teams can access. You can create a project called "Onboarding" and users can leverage this to run the pipeline to create a service, environment, infrastructure definition, secret, etc.
+Harness recommends storing the automation pipeline to create and manage resources in a common project that many teams can access. You can create a project called "Onboarding" and users can leverage this to run the pipeline to create a service, environment, infrastructure definition, secret, etc. Harness lets user's manage pipelines in git via the [Git Experience](https://developer.harness.io/docs/platform/git-experience/configure-git-experience-for-harness-entities/), this lets you manage all your pipeline configuration in Git. 
 
 The other alternative is to create pipeline templates that teams can use in their project. This lets a central team manage the pipelines for onboarding and distribute them to the app teams to leverage and onboard.
 
@@ -253,8 +258,8 @@ Below is the flow to get the automation setup in Harness:
 1. Create a Pipeline
 2. Create a Trigger for a Git based source
 3. Create a terraform resource file of a Harness object
-4. Commit the object
-5. See the Pipeline execute
+4. Commit the Harness terraform resource object (service, environment, infrastructure, etc.) in Github
+5. See the Pipeline execute based of the Trigger
 6. Look in the Harness account where resource was configured to be created.
 
 ### For Building a Pipeline
@@ -382,10 +387,6 @@ resource "harness_platform_service" "service" {
               EOT
 }
 ```
-
-When you define your Service via Terraform, it's a one way sync. You are defining the Service in Git via Terraform, and on a commit of a change we will trigger a Harness Pipeline to provision the changes for your account. The pipeline will end up creating a service for you. Any changes you do via Git will propagate to the UI via this Pipeline which will fetch the service Terraform file definition.
-
-Any changes done in the UI will need to be reconciled and updated in the YAML in order to protect against configuration mismatch. We recommend when using the terraform provider to manage services, you should use Git only to make your changes. We can have [RBAC](https://developer.harness.io/docs/platform/role-based-access-control/rbac-in-harness/) in place to prevent the editting and creation of services in the Harness UI.
 
 When you run an automation pipeline to create service, you will see the service created in the UI like so:
 
