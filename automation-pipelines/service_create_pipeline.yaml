@@ -27,7 +27,7 @@ pipeline:
                             gitFetchType: Branch
                             connectorRef: <+input>
                             branch: main
-                            folderPath: service/nginx.tf
+                            folderPath: services/nginx.tf
                         moduleSource:
                           useConnectorCredentials: true
                       secretManagerRef: harnessSecretManager
