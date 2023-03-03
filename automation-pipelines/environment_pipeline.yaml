@@ -1,0 +1,46 @@
+pipeline:
+  name: Onboarding Environments
+  identifier: Create_Environment_Pipeline
+  projectIdentifier: cdproduct
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Create and Update Environment
+        identifier: Create_and_Update_Environment
+        description: Create and update a environment from Github
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: TerraformPlan
+                  name: Service Create and Update Plan
+                  identifier: Service_Create_and_Update_Plan
+                  spec:
+                    configuration:
+                      command: Apply
+                      configFiles:
+                        store:
+                          type: Github
+                          spec:
+                            gitFetchType: Branch
+                            connectorRef: <+input>
+                            branch: main
+                            folderPath: environments/dev.tf
+                        moduleSource:
+                          useConnectorCredentials: true
+                      secretManagerRef: harnessSecretManager
+                    provisionerIdentifier: environment
+                  timeout: 10m
+              - step:
+                  type: TerraformApply
+                  name: Create and Update Service
+                  identifier: Create_and_Update_Service
+                  spec:
+                    configuration:
+                      type: InheritFromPlan
+                    provisionerIdentifier: environment
+                  timeout: 10m
+        tags: {}
+  description: This Pipeline is dedicated to onboarding environments in Harness
