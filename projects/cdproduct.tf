@@ -15,3 +15,8 @@ resource "harness_platform_project" "project" {
   color      = "#0063F7"
 }
 
+provider "harness" {
+  endpoint = "https://app.harness.io/gateway"
+  account_id = "YOUR_HARNESS_ACCOUNT_ID"
+  platform_api_key = "YOUR_PAT"
+}
