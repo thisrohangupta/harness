@@ -400,7 +400,7 @@ Below is a sample pipeline to create the nginx service and manage it via Git aut
 pipeline:
   name: Onboarding Service
   identifier: Deploy_Sample_Pipeline
-  projectIdentifier: Rohan
+  projectIdentifier: cdproduct
   orgIdentifier: default
   tags: {}
   stages:
