@@ -269,6 +269,17 @@ For help building Pipelines, Harness offers a starter guide in our developer hub
 - [Terraform Plan Step](https://developer.harness.io/docs/continuous-delivery/cd-advanced/terraform-category/run-a-terraform-plan-with-the-terraform-plan-step/)
 - [Terraform Apply Step](https://developer.harness.io/docs/continuous-delivery/cd-advanced/terraform-category/run-a-terraform-plan-with-the-terraform-apply-step)
 
+The Terraform Plan step will fetch the terraform resource from git and Harness will initiate a terraform plan on the files collected.
+
+The Terraform Plan Step can be configured like so:
+
+![Terraform Plan](https://github.com/thisrohangupta/changelog/blob/master/terraform-provider/assets/terraformplan.png)
+
+Harness will pass the Terraform plan to that was generated based off the Harness Terraform Resource file and will pass it into the Apply Step. The Terraform Apply Step can Inherit the plan and create or update the service resource by selecting "Inherit from Plan". You need to make sure the Terraform Plan step is configured before the Apply.
+
+![Terraform Apply](https://github.com/thisrohangupta/changelog/blob/master/terraform-provider/assets/terraformapply.png)
+
+
 ### Sample Trigger Setup
 
 Below is a sample trigger to fire off the pipeline. We recommend using the [Github Webhook](https://developer.harness.io/docs/platform/pipelines/w_pipeline-steps-reference/triggers-reference/) trigger because you can make changes in Github and based of a branch condition, push, pull request, issue comment, etc. you can fire off the pipeline to make changes. The trigger doesn't need to be Github.
@@ -434,15 +445,6 @@ pipeline:
   description: This Pipeline is dedicated to onboarding services in Harness
 
 ```
-
-The Terraform Plan Step can be configured like so:
-
-![Terraform Plan](https://github.com/thisrohangupta/changelog/blob/master/terraform-provider/assets/terraformplan.png)
-
-The Terraform Apply Step can Inherit the plan and create or update the service resource
-
-![Terraform Apply](https://github.com/thisrohangupta/changelog/blob/master/terraform-provider/assets/terraformapply.png)
-
 The overall pipeline will look something like below:
 
 ![Pipeline](https://github.com/thisrohangupta/changelog/blob/master/terraform-provider/assets/Pipeline.png)
