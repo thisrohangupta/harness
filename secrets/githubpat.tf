@@ -18,3 +18,10 @@ resource "harness_platform_secret_text" "secret" {
   value_type                = "Inline"
   value                     = "secret"
 }
+
+
+provider "harness" {
+  endpoint = "https://app.harness.io/gateway"
+  account_id = "YOUR_HARNESS_ACCOUNT_ID"
+  platform_api_key = "YOUR_PAT"
+}
