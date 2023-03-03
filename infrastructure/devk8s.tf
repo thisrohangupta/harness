@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    harness = {
+      source = "harness/harness"
+      version = "0.14.10"
+    }
+  }
+}
+
 
 
 resource "harness_platform_infrastructure" "infrastructure" {
