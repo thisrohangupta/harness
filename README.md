@@ -691,6 +691,10 @@ resource "harness_platform_project" "project" {
 }
 ```
 
+To manage the organization and project identifiers in code, we recommend user's creating a `tfvars` file to manage these resources. The tfvars file will act as a record of all the organizations and projects you created via terraform and can be the parameter file for onboarding automation.
+
+
+
 ### Get the Delegate operationalized
 
 - We recommend for production grade delegate installation, to build your own delegate image and deploy it
